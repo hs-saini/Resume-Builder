@@ -102,69 +102,75 @@
 
         <section class="form-section">
           <h2><span class="step-number">03</span><span data-i18n="academicQualification">Academic Qualification</span></h2>
-          <div class="form-grid">
-            <label class="field">
-              <span data-i18n="qualification">Qualification</span>
-              <select id="qualification" name="qualification">
-                <option value="" data-i18n="selectOption" selected>Select</option>
-                <option value="highSchool" data-i18n="highSchool">High School</option>
-                <option value="intermediate" data-i18n="intermediate">Intermediate / Class 12</option>
-                <option value="diploma" data-i18n="diploma">Diploma</option>
-                <option value="iti" data-i18n="iti">ITI</option>
-                <option value="ba" data-i18n="ba">Bachelor of Arts (BA)</option>
-                <option value="bsc" data-i18n="bsc">Bachelor of Science (BSc)</option>
-                <option value="bcom" data-i18n="bcom">Bachelor of Commerce (BCom)</option>
-                <option value="bba" data-i18n="bba">Bachelor of Business Administration (BBA)</option>
-                <option value="bca" data-i18n="bca">Bachelor of Computer Applications (BCA)</option>
-                <option value="beBtech" data-i18n="beBtech">BE / BTech</option>
-                <option value="bed" data-i18n="bed">Bachelor of Education (BEd)</option>
-                <option value="llb" data-i18n="llb">Bachelor of Laws (LLB)</option>
-                <option value="bpharm" data-i18n="bpharm">Bachelor of Pharmacy (BPharm)</option>
-                <option value="barch" data-i18n="barch">Bachelor of Architecture (BArch)</option>
-                <option value="bdes" data-i18n="bdes">Bachelor of Design (BDes)</option>
-                <option value="bsw" data-i18n="bsw">Bachelor of Social Work (BSW)</option>
-                <option value="bpt" data-i18n="bpt">Bachelor of Physiotherapy (BPT)</option>
-                <option value="mbbs" data-i18n="mbbs">Bachelor of Medicine (MBBS)</option>
-                <option value="bams" data-i18n="bams">Bachelor of Ayurvedic Medicine (BAMS)</option>
-                <option value="bhms" data-i18n="bhms">Bachelor of Homeopathic Medicine (BHMS)</option>
-                <option value="bvsc" data-i18n="bvsc">Bachelor of Veterinary Science (BVSc)</option>
-                <option value="bhm" data-i18n="bhm">Bachelor of Hotel Management (BHM)</option>
-                <option value="ma" data-i18n="ma">Master of Arts (MA)</option>
-                <option value="msc" data-i18n="msc">Master of Science (MSc)</option>
-                <option value="mcom" data-i18n="mcom">Master of Commerce (MCom)</option>
-                <option value="mba" data-i18n="mba">Master of Business Administration (MBA)</option>
-                <option value="mca" data-i18n="mca">Master of Computer Applications (MCA)</option>
-                <option value="meMtech" data-i18n="meMtech">ME / MTech</option>
-                <option value="med" data-i18n="med">Master of Education (MEd)</option>
-                <option value="llm" data-i18n="llm">Master of Laws (LLM)</option>
-                <option value="mpharm" data-i18n="mpharm">Master of Pharmacy (MPharm)</option>
-                <option value="march" data-i18n="march">Master of Architecture (MArch)</option>
-                <option value="mdes" data-i18n="mdes">Master of Design (MDes)</option>
-                <option value="msw" data-i18n="msw">Master of Social Work (MSW)</option>
-                <option value="mpt" data-i18n="mpt">Master of Physiotherapy (MPT)</option>
-                <option value="md" data-i18n="md">Doctor of Medicine (MD)</option>
-                <option value="msMedicine" data-i18n="msMedicine">Master of Surgery (MS)</option>
-                <option value="phd" data-i18n="phd">Doctorate / PhD</option>
-                <option value="other" data-i18n="otherCourse">Other (enter course)</option>
-              </select>
-            </label>
-            <label id="otherCourseField" class="field" hidden>
-              <span data-i18n="otherCourseName">Enter your course</span>
-              <input id="otherCourse" name="otherCourse" disabled data-i18n-placeholder="otherCoursePlaceholder" placeholder="Enter your course name">
-            </label>
-            <label class="field">
-              <span data-i18n="boardUniversity">Board / University</span>
-              <input id="board" name="board" data-i18n-placeholder="boardPlaceholder" placeholder="Board or university name">
-            </label>
-            <label class="field">
-              <span data-i18n="passingYear">Year</span>
-              <input id="passingYear" name="passingYear" inputmode="numeric" data-i18n-placeholder="yearPlaceholder" placeholder="e.g. 2024">
-            </label>
-            <label class="field">
-              <span data-i18n="percentage">Percentage</span>
-              <input id="percentage" name="percentage" data-i18n-placeholder="percentagePlaceholder" placeholder="e.g. 75%">
-            </label>
+          <div id="qualificationEntries">
+            <div class="qualification-entry">
+              <div class="form-grid">
+                <label class="field">
+                  <span data-i18n="qualification">Qualification</span>
+                  <select id="qualification" class="qualification-select" name="qualification">
+                    <option value="" data-i18n="selectOption" selected>Select</option>
+                    <option value="highSchool" data-i18n="highSchool">High School</option>
+                    <option value="intermediate" data-i18n="intermediate">Intermediate / Class 12</option>
+                    <option value="diploma" data-i18n="diploma">Diploma</option>
+                    <option value="iti" data-i18n="iti">ITI</option>
+                    <option value="ba" data-i18n="ba">Bachelor of Arts (BA)</option>
+                    <option value="bsc" data-i18n="bsc">Bachelor of Science (BSc)</option>
+                    <option value="bcom" data-i18n="bcom">Bachelor of Commerce (BCom)</option>
+                    <option value="bba" data-i18n="bba">Bachelor of Business Administration (BBA)</option>
+                    <option value="bca" data-i18n="bca">Bachelor of Computer Applications (BCA)</option>
+                    <option value="beBtech" data-i18n="beBtech">BE / BTech</option>
+                    <option value="bed" data-i18n="bed">Bachelor of Education (BEd)</option>
+                    <option value="llb" data-i18n="llb">Bachelor of Laws (LLB)</option>
+                    <option value="bpharm" data-i18n="bpharm">Bachelor of Pharmacy (BPharm)</option>
+                    <option value="barch" data-i18n="barch">Bachelor of Architecture (BArch)</option>
+                    <option value="bdes" data-i18n="bdes">Bachelor of Design (BDes)</option>
+                    <option value="bsw" data-i18n="bsw">Bachelor of Social Work (BSW)</option>
+                    <option value="bpt" data-i18n="bpt">Bachelor of Physiotherapy (BPT)</option>
+                    <option value="mbbs" data-i18n="mbbs">Bachelor of Medicine (MBBS)</option>
+                    <option value="bams" data-i18n="bams">Bachelor of Ayurvedic Medicine (BAMS)</option>
+                    <option value="bhms" data-i18n="bhms">Bachelor of Homeopathic Medicine (BHMS)</option>
+                    <option value="bvsc" data-i18n="bvsc">Bachelor of Veterinary Science (BVSc)</option>
+                    <option value="bhm" data-i18n="bhm">Bachelor of Hotel Management (BHM)</option>
+                    <option value="ma" data-i18n="ma">Master of Arts (MA)</option>
+                    <option value="msc" data-i18n="msc">Master of Science (MSc)</option>
+                    <option value="mcom" data-i18n="mcom">Master of Commerce (MCom)</option>
+                    <option value="mba" data-i18n="mba">Master of Business Administration (MBA)</option>
+                    <option value="mca" data-i18n="mca">Master of Computer Applications (MCA)</option>
+                    <option value="meMtech" data-i18n="meMtech">ME / MTech</option>
+                    <option value="med" data-i18n="med">Master of Education (MEd)</option>
+                    <option value="llm" data-i18n="llm">Master of Laws (LLM)</option>
+                    <option value="mpharm" data-i18n="mpharm">Master of Pharmacy (MPharm)</option>
+                    <option value="march" data-i18n="march">Master of Architecture (MArch)</option>
+                    <option value="mdes" data-i18n="mdes">Master of Design (MDes)</option>
+                    <option value="msw" data-i18n="msw">Master of Social Work (MSW)</option>
+                    <option value="mpt" data-i18n="mpt">Master of Physiotherapy (MPT)</option>
+                    <option value="md" data-i18n="md">Doctor of Medicine (MD)</option>
+                    <option value="msMedicine" data-i18n="msMedicine">Master of Surgery (MS)</option>
+                    <option value="phd" data-i18n="phd">Doctorate / PhD</option>
+                    <option value="other" data-i18n="otherCourse">Other (enter course)</option>
+                  </select>
+                </label>
+                <label class="field other-course-field" hidden>
+                  <span data-i18n="otherCourseName">Enter your course</span>
+                  <input class="other-course" name="otherCourse" disabled data-i18n-placeholder="otherCoursePlaceholder" placeholder="Enter your course name">
+                </label>
+                <label class="field">
+                  <span data-i18n="boardUniversity">Board / University</span>
+                  <input class="qualification-board" name="board" data-i18n-placeholder="boardPlaceholder" placeholder="Board or university name">
+                </label>
+                <label class="field">
+                  <span data-i18n="passingYear">Year</span>
+                  <input class="qualification-year" name="passingYear" inputmode="numeric" data-i18n-placeholder="yearPlaceholder" placeholder="e.g. 2024">
+                </label>
+                <label class="field">
+                  <span data-i18n="percentage">Percentage</span>
+                  <input class="qualification-percentage" name="percentage" data-i18n-placeholder="percentagePlaceholder" placeholder="e.g. 75%">
+                </label>
+              </div>
+              <button type="button" class="remove-qualification" data-i18n="removeQualification">Remove education</button>
+            </div>
           </div>
+          <button type="button" id="addQualification" class="add-qualification" data-i18n="addQualification">+ Add another education</button>
         </section>
 
         <section class="form-section">
@@ -254,12 +260,7 @@
               <span data-i18n="passingYear">Year</span>
               <span data-i18n="percentage">Percentage</span>
             </div>
-            <div class="table-row">
-              <span id="previewQualification">—</span>
-              <span id="previewBoard">—</span>
-              <span id="previewYear">—</span>
-              <span id="previewPercentage">—</span>
-            </div>
+            <div id="previewQualifications"></div>
           </div>
         </section>
         <section class="resume-block">

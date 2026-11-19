@@ -12,6 +12,7 @@ const langData = {
     personalDetails: "Personal Details", fullName: "Full Name", fatherName: "Father's Name", dateOfBirth: "Date of Birth",
     gender: "Gender", maritalStatus: "Marital Status", address: "Address", phone: "Mobile Number", email: "Email Address",
     academicQualification: "Academic Qualification", qualification: "Qualification", boardUniversity: "Board / University",
+    addQualification: "+ Add another education", removeQualification: "Remove education",
     passingYear: "Year", percentage: "Percentage", workExperience: "Work Experience", yearsExperience: "Years of Experience",
     yearSingular: "year", yearPlural: "years", lessThanOneYear: "Less than 1 year",
     targetJobRole: "Target Job Role", experienceDetails: "Experience Details", experienceHint: "Choose your years of experience. Select Fresher if you have no work experience.",
@@ -69,6 +70,7 @@ const langData = {
     personalDetails: "व्यक्तिगत विवरण", fullName: "पूरा नाम", fatherName: "पिता का नाम", dateOfBirth: "जन्म तिथि",
     gender: "लिंग", maritalStatus: "वैवाहिक स्थिति", address: "पता", phone: "मोबाइल नंबर", email: "ईमेल पता",
     academicQualification: "शैक्षणिक योग्यता", qualification: "योग्यता", boardUniversity: "बोर्ड/विश्वविद्यालय",
+    addQualification: "+ एक और शिक्षा जोड़ें", removeQualification: "शिक्षा हटाएँ",
     passingYear: "वर्ष", percentage: "प्रतिशत", workExperience: "कार्य अनुभव", yearsExperience: "कार्य अनुभव (वर्षों में)",
     yearSingular: "वर्ष", yearPlural: "वर्ष", lessThanOneYear: "1 वर्ष से कम",
     targetJobRole: "लक्षित नौकरी", experienceDetails: "अनुभव का विवरण", experienceHint: "अपने अनुभव के वर्ष चुनें। कार्य अनुभव न हो तो फ्रेशर चुनें।",
@@ -309,6 +311,50 @@ function renderSkills() {
   });
 }
 
+function getEducationEntries() {
+  return Array.from(document.querySelectorAll(".qualification-entry"), (entry) => {
+    const select = entry.querySelector(".qualification-select");
+    const qualification = select.value === "other"
+      ? entry.querySelector(".other-course").value.trim()
+      : select.value
+        ? select.selectedOptions[0].textContent
+        : "";
+    return {
+      qualification,
+      board: entry.querySelector(".qualification-board").value.trim(),
+      year: entry.querySelector(".qualification-year").value.trim(),
+      percentage: entry.querySelector(".qualification-percentage").value.trim()
+    };
+  }).filter((entry) => Object.values(entry).some(Boolean));
+}
+
+function updateQualificationControls() {
+  const entries = Array.from(document.querySelectorAll(".qualification-entry"));
+  const removeLabel = langData[currentLanguage].removeQualification;
+  entries.forEach((entry) => {
+    const button = entry.querySelector(".remove-qualification");
+    button.textContent = removeLabel;
+    button.disabled = entries.length === 1;
+  });
+}
+
+function addQualificationEntry() {
+  const source = document.querySelector(".qualification-entry");
+  const entry = source.cloneNode(true);
+  entry.querySelectorAll("[id]").forEach((element) => element.removeAttribute("id"));
+  entry.querySelector(".qualification-select").value = "";
+  entry.querySelector(".other-course").value = "";
+  entry.querySelector(".other-course").disabled = true;
+  entry.querySelector(".other-course-field").hidden = true;
+  entry.querySelector(".qualification-board").value = "";
+  entry.querySelector(".qualification-year").value = "";
+  entry.querySelector(".qualification-percentage").value = "";
+  document.querySelector("#qualificationEntries").append(entry);
+  updateQualificationControls();
+  invalidateAiObjective();
+  updatePreview();
+}
+
 function value(id) {
   return $(id).value.trim();
 }
@@ -340,16 +386,10 @@ function generateCareerObjective() {
   const role = jobRoles.find((item) => item.value === $("jobRole").value) || jobRoles[jobRoles.length - 1];
   const language = currentLanguage;
   const selectedYears = $("experienceYears").value;
-  const qualification = $("qualification").value === "other"
-    ? value("otherCourse")
-    : $("qualification").value
-      ? $("qualification").selectedOptions[0].textContent
-      : "";
-  const educationContext = [
-    qualification,
-    value("board"),
-    value("passingYear")
-  ].filter(Boolean).join(language === "hi" ? " - " : ", ");
+  const educationEntries = getEducationEntries();
+  const educationContext = educationEntries
+    .map((entry) => [entry.qualification, entry.board, entry.year, entry.percentage].filter(Boolean).join(", "))
+    .join("; ");
   const skills = Array.from(selectedSkills, (index) => skillData[index][language]).slice(0, 4);
   const skillsText = skills.length
     ? skills.join(language === "hi" ? ", " : ", ")
@@ -357,7 +397,7 @@ function generateCareerObjective() {
   const experienceDetails = selectedYears === "fresher" ? "" : value("experienceDetails");
 
   if (language === "hi") {
-    const education = educationContext
+      const education = educationContext
       ? `मेरी शैक्षणिक पृष्ठभूमि ${educationContext} है।`
       : "";
     const yearsDescription = selectedYears === "lessThanOne"
@@ -414,15 +454,18 @@ function updatePreview() {
   appendDetail(personal, dictionary.maritalLabel, maritalStatus ? dictionary[maritalStatus] : "");
   appendDetail(personal, dictionary.addressLabel, value("address"));
 
-  const course = $("qualification").value === "other"
-    ? value("otherCourse")
-    : $("qualification").value
-      ? $("qualification").selectedOptions[0].textContent
-      : "";
-  setText("previewQualification", course);
-  setText("previewBoard", value("board"));
-  setText("previewYear", value("passingYear"));
-  setText("previewPercentage", value("percentage"));
+  const educationEntries = getEducationEntries();
+  const previewRows = educationEntries.length ? educationEntries : [{ qualification: "", board: "", year: "", percentage: "" }];
+  $("previewQualifications").replaceChildren(...previewRows.map((entry) => {
+    const row = document.createElement("div");
+    row.className = "table-row";
+    [entry.qualification, entry.board, entry.year, entry.percentage].forEach((text) => {
+      const cell = document.createElement("span");
+      cell.textContent = text || "—";
+      row.append(cell);
+    });
+    return row;
+  }));
 
   const selectedYears = $("experienceYears").value;
   const yearsLabel = selectedYears === "lessThanOne"
@@ -460,18 +503,31 @@ document.querySelectorAll(".template-option").forEach((button) => {
     });
   });
 });
+ $("addQualification").addEventListener("click", addQualificationEntry);
 form.addEventListener("input", (event) => {
   if (event.target.id !== "aiConsent") invalidateAiObjective();
   updatePreview();
 });
 form.addEventListener("change", (event) => {
   if (event.target.id !== "aiConsent") invalidateAiObjective();
-  if (event.target.id === "qualification") {
+  if (event.target.matches(".qualification-select")) {
+    const entry = event.target.closest(".qualification-entry");
     const showOtherCourse = event.target.value === "other";
-    $("otherCourseField").hidden = !showOtherCourse;
-    $("otherCourse").disabled = !showOtherCourse;
-    $("otherCourse").required = showOtherCourse;
+    const otherCourseField = entry.querySelector(".other-course-field");
+    const otherCourse = entry.querySelector(".other-course");
+    otherCourseField.hidden = !showOtherCourse;
+    otherCourse.disabled = !showOtherCourse;
+    otherCourse.required = showOtherCourse;
   }
+  updatePreview();
+});
+form.addEventListener("click", (event) => {
+  if (!event.target.matches(".remove-qualification")) return;
+  const entries = document.querySelectorAll(".qualification-entry");
+  if (entries.length === 1) return;
+  event.target.closest(".qualification-entry").remove();
+  updateQualificationControls();
+  invalidateAiObjective();
   updatePreview();
 });
 $("aiConsent").addEventListener("change", () => {
@@ -482,11 +538,9 @@ $("generateObjective").addEventListener("click", async () => {
   if (!$("aiConsent").checked) return;
 
   const role = jobRoles.find((item) => item.value === $("jobRole").value) || jobRoles[jobRoles.length - 1];
-  const qualification = $("qualification").value === "other"
-    ? value("otherCourse")
-    : $("qualification").value
-      ? $("qualification").selectedOptions[0].textContent
-      : "";
+  const education = getEducationEntries()
+    .map((entry) => [entry.qualification, entry.board, entry.year, entry.percentage].filter(Boolean).join(", "))
+    .join("; ");
   const years = $("experienceYears").value;
   const button = $("generateObjective");
   const requestId = ++objectiveRequestId;
@@ -504,7 +558,7 @@ $("generateObjective").addEventListener("click", async () => {
       body: JSON.stringify({
         language: currentLanguage,
         role: role[currentLanguage],
-        education: [qualification, value("board"), value("passingYear")].filter(Boolean).join(", "),
+        education,
         skills: Array.from(selectedSkills, (index) => skillData[index][currentLanguage]),
         yearsExperience: years === "fresher" ? "Fresher" : years,
         experienceDetails: value("experienceDetails")
@@ -548,5 +602,6 @@ $("declarationDate").value = [
 
 renderJobRoleOptions();
 renderExperienceYearOptions();
+updateQualificationControls();
 document.querySelector("#resumePreview").dataset.template = currentTemplate;
 setLanguage("en");

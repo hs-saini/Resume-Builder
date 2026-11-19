@@ -88,6 +88,13 @@ button { cursor: pointer; }
 .generate-button[aria-busy="true"]::after { content: ""; display: inline-block; width: 10px; height: 10px; margin-left: 8px; border: 1px solid #ffffff80; border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; vertical-align: -1px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 13px; }
+.qualification-entry { margin-bottom: 14px; padding: 14px; border: 1px solid var(--line); border-radius: 9px; background: #fff; }
+.qualification-entry:last-child { margin-bottom: 0; }
+.remove-qualification, .add-qualification { min-height: 36px; border: 1px solid #c9dceb; border-radius: 7px; background: #fff; color: var(--blue-dark); padding: 8px 11px; font-size: 11px; font-weight: 600; }
+.remove-qualification { margin-top: 12px; }
+.remove-qualification:disabled { cursor: not-allowed; opacity: .5; }
+.add-qualification { margin-top: 11px; background: var(--blue-soft); }
+.remove-qualification:hover:not(:disabled), .add-qualification:hover { border-color: var(--blue); }
 .field { min-width: 0; display: flex; flex-direction: column; gap: 7px; }
 .field > span { color: #43536b; font-size: 11px; font-weight: 600; }
 .field input, .field select, .field textarea { width: 100%; min-height: 41px; border: 1px solid #dfe5ec; border-radius: 7px; outline: none; background: #fff; color: #263852; padding: 10px 11px; font-size: 12px; }
@@ -126,6 +133,7 @@ button { cursor: pointer; }
 .detail-list dd { margin: 0; overflow-wrap: anywhere; }
 .qualification-table { width: 100%; }
 .table-row { display: grid; grid-template-columns: 1.1fr 1.5fr .65fr .8fr; gap: 8px; padding: 7px 6px; border-bottom: 1px solid #edf0f4; overflow-wrap: anywhere; }
+.table-row > span { min-width: 0; overflow-wrap: anywhere; }
 .table-head { color: #68778c; background: #f5f8fb; font-weight: 600; }
 .resume-skills { display: flex; flex-wrap: wrap; gap: 5px 16px; margin: 0; padding-left: 15px; color: #526179; }
 .resume-skills li { padding-right: 2px; }

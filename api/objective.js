@@ -64,7 +64,7 @@ module.exports = async function handler(req, res) {
   if (
     !["en", "hi"].includes(language) ||
     !isShortText(role, 100) || !role.trim() ||
-    !isShortText(education, 500) ||
+    !isShortText(education, 2000) ||
     !Array.isArray(skills) || skills.length > 15 || !skills.every((skill) => isShortText(skill, 100)) ||
     !isShortText(yearsExperience, 20) ||
     !isShortText(experienceDetails, MAX_TEXT_LENGTH)

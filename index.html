@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create and print a professional bilingual resume with Half Engineer.">
+  <title>Half Engineer | Resume Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Half Engineer Resume Builder home">
+      <span class="brand-mark" aria-hidden="true">HE</span>
+      <span><strong>Half Engineer</strong><small data-i18n="appSubtitle">Resume Builder</small></span>
+    </a>
+    <div class="header-actions">
+      <div class="language-switch" role="group" aria-label="Choose language">
+        <button type="button" class="language-option active" data-language="en" aria-pressed="true">English</button>
+        <span aria-hidden="true">|</span>
+        <button type="button" class="language-option" data-language="hi" aria-pressed="false">हिंदी</button>
+      </div>
+      <button class="print-button" type="button" id="printButton"><span aria-hidden="true">↓</span> <span data-i18n="downloadPrint">Print / Save PDF</span></button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <section class="builder-panel" aria-labelledby="builderTitle">
+      <div class="section-intro">
+        <h1 id="builderTitle" data-i18n="createResume">Create your resume</h1>
+        <p data-i18n="introText">Fill in your details. Your resume updates instantly and is ready to print.</p>
+      </div>
+
+      <form id="resumeForm">
+        <section class="form-section template-section">
+          <h2><span class="step-number">01</span><span data-i18n="chooseTemplate">Choose a template</span></h2>
+          <div class="template-options" role="group" aria-label="Resume template">
+            <button type="button" class="template-option selected" data-template="professional" aria-pressed="true">
+              <span class="template-thumb professional-thumb" aria-hidden="true"><i></i><i></i><i></i><b></b></span>
+              <span class="template-option-copy"><strong data-i18n="professionalTemplate">Professional</strong><small data-i18n="professionalHint">Clean and balanced</small></span>
+            </button>
+            <button type="button" class="template-option" data-template="modern" aria-pressed="false">
+              <span class="template-thumb modern-thumb" aria-hidden="true"><i></i><i></i><i></i><b></b></span>
+              <span class="template-option-copy"><strong data-i18n="modernTemplate">Modern</strong><small data-i18n="modernHint">Bold accent and structure</small></span>
+            </button>
+            <button type="button" class="template-option" data-template="classic" aria-pressed="false">
+              <span class="template-thumb classic-thumb" aria-hidden="true"><i></i><i></i><i></i><b></b></span>
+              <span class="template-option-copy"><strong data-i18n="classicTemplate">Classic</strong><small data-i18n="classicHint">Traditional and formal</small></span>
+            </button>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h2><span class="step-number">02</span><span data-i18n="personalDetails">Personal Details</span></h2>
+          <div class="form-grid">
+            <label class="field full-width">
+              <span data-i18n="fullName">Full Name</span>
+              <input id="fullName" name="fullName" autocomplete="name" data-i18n-placeholder="namePlaceholder" placeholder="e.g. Rahul Kumar">
+            </label>
+            <label class="field">
+              <span data-i18n="fatherName">Father's Name</span>
+              <input id="fatherName" name="fatherName" data-i18n-placeholder="fatherPlaceholder" placeholder="Father's full name">
+            </label>
+            <label class="field">
+              <span data-i18n="dateOfBirth">Date of Birth</span>
+              <input id="dob" name="dob" type="date">
+            </label>
+            <label class="field">
+              <span data-i18n="gender">Gender</span>
+              <select id="gender" name="gender">
+                <option value="" data-i18n="selectOption">Select</option>
+                <option value="male" data-i18n="male">Male</option>
+                <option value="female" data-i18n="female">Female</option>
+                <option value="other" data-i18n="other">Other</option>
+              </select>
+            </label>
+            <label class="field">
+              <span data-i18n="maritalStatus">Marital Status</span>
+              <select id="maritalStatus" name="maritalStatus">
+                <option value="" data-i18n="selectOption">Select</option>
+                <option value="single" data-i18n="single">Single</option>
+                <option value="married" data-i18n="married">Married</option>
+                <option value="other" data-i18n="other">Other</option>
+              </select>
+            </label>
+            <label class="field full-width">
+              <span data-i18n="address">Address</span>
+              <textarea id="address" name="address" rows="2" autocomplete="street-address" data-i18n-placeholder="addressPlaceholder" placeholder="Village / city, district, state"></textarea>
+            </label>
+            <label class="field">
+              <span data-i18n="phone">Mobile Number</span>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" data-i18n-placeholder="phonePlaceholder" placeholder="10-digit mobile number">
+            </label>
+            <label class="field">
+              <span data-i18n="email">Email Address</span>
+              <input id="email" name="email" type="email" autocomplete="email" data-i18n-placeholder="emailPlaceholder" placeholder="name@example.com">
+            </label>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h2><span class="step-number">03</span><span data-i18n="academicQualification">Academic Qualification</span></h2>
+          <div class="form-grid">
+            <label class="field">
+              <span data-i18n="qualification">Qualification</span>
+              <select id="qualification" name="qualification">
+                <option value="" data-i18n="selectOption" selected>Select</option>
+                <option value="highSchool" data-i18n="highSchool">High School</option>
+                <option value="intermediate" data-i18n="intermediate">Intermediate / Class 12</option>
+                <option value="diploma" data-i18n="diploma">Diploma</option>
+                <option value="iti" data-i18n="iti">ITI</option>
+                <option value="ba" data-i18n="ba">Bachelor of Arts (BA)</option>
+                <option value="bsc" data-i18n="bsc">Bachelor of Science (BSc)</option>
+                <option value="bcom" data-i18n="bcom">Bachelor of Commerce (BCom)</option>
+                <option value="bba" data-i18n="bba">Bachelor of Business Administration (BBA)</option>
+                <option value="bca" data-i18n="bca">Bachelor of Computer Applications (BCA)</option>
+                <option value="beBtech" data-i18n="beBtech">BE / BTech</option>
+                <option value="bed" data-i18n="bed">Bachelor of Education (BEd)</option>
+                <option value="llb" data-i18n="llb">Bachelor of Laws (LLB)</option>
+                <option value="bpharm" data-i18n="bpharm">Bachelor of Pharmacy (BPharm)</option>
+                <option value="barch" data-i18n="barch">Bachelor of Architecture (BArch)</option>
+                <option value="bdes" data-i18n="bdes">Bachelor of Design (BDes)</option>
+                <option value="bsw" data-i18n="bsw">Bachelor of Social Work (BSW)</option>
+                <option value="bpt" data-i18n="bpt">Bachelor of Physiotherapy (BPT)</option>
+                <option value="mbbs" data-i18n="mbbs">Bachelor of Medicine (MBBS)</option>
+                <option value="bams" data-i18n="bams">Bachelor of Ayurvedic Medicine (BAMS)</option>
+                <option value="bhms" data-i18n="bhms">Bachelor of Homeopathic Medicine (BHMS)</option>
+                <option value="bvsc" data-i18n="bvsc">Bachelor of Veterinary Science (BVSc)</option>
+                <option value="bhm" data-i18n="bhm">Bachelor of Hotel Management (BHM)</option>
+                <option value="ma" data-i18n="ma">Master of Arts (MA)</option>
+                <option value="msc" data-i18n="msc">Master of Science (MSc)</option>
+                <option value="mcom" data-i18n="mcom">Master of Commerce (MCom)</option>
+                <option value="mba" data-i18n="mba">Master of Business Administration (MBA)</option>
+                <option value="mca" data-i18n="mca">Master of Computer Applications (MCA)</option>
+                <option value="meMtech" data-i18n="meMtech">ME / MTech</option>
+                <option value="med" data-i18n="med">Master of Education (MEd)</option>
+                <option value="llm" data-i18n="llm">Master of Laws (LLM)</option>
+                <option value="mpharm" data-i18n="mpharm">Master of Pharmacy (MPharm)</option>
+                <option value="march" data-i18n="march">Master of Architecture (MArch)</option>
+                <option value="mdes" data-i18n="mdes">Master of Design (MDes)</option>
+                <option value="msw" data-i18n="msw">Master of Social Work (MSW)</option>
+                <option value="mpt" data-i18n="mpt">Master of Physiotherapy (MPT)</option>
+                <option value="md" data-i18n="md">Doctor of Medicine (MD)</option>
+                <option value="msMedicine" data-i18n="msMedicine">Master of Surgery (MS)</option>
+                <option value="phd" data-i18n="phd">Doctorate / PhD</option>
+                <option value="other" data-i18n="otherCourse">Other (enter course)</option>
+              </select>
+            </label>
+            <label id="otherCourseField" class="field" hidden>
+              <span data-i18n="otherCourseName">Enter your course</span>
+              <input id="otherCourse" name="otherCourse" disabled data-i18n-placeholder="otherCoursePlaceholder" placeholder="Enter your course name">
+            </label>
+            <label class="field">
+              <span data-i18n="boardUniversity">Board / University</span>
+              <input id="board" name="board" data-i18n-placeholder="boardPlaceholder" placeholder="Board or university name">
+            </label>
+            <label class="field">
+              <span data-i18n="passingYear">Year</span>
+              <input id="passingYear" name="passingYear" inputmode="numeric" data-i18n-placeholder="yearPlaceholder" placeholder="e.g. 2024">
+            </label>
+            <label class="field">
+              <span data-i18n="percentage">Percentage</span>
+              <input id="percentage" name="percentage" data-i18n-placeholder="percentagePlaceholder" placeholder="e.g. 75%">
+            </label>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h2><span class="step-number">04</span><span data-i18n="workExperience">Work Experience</span></h2>
+          <div class="form-grid">
+            <label class="field">
+              <span data-i18n="yearsExperience">Years of Experience</span>
+              <select id="experienceYears" name="experienceYears">
+                <option value="fresher" data-i18n="fresher">Fresher</option>
+              </select>
+            </label>
+            <label class="field">
+              <span data-i18n="targetJobRole">Target Job Role</span>
+              <select id="jobRole" name="jobRole">
+                <option value="computerOperator" data-i18n="computerOperator">Computer Operator</option>
+              </select>
+            </label>
+            <label class="field full-width">
+              <span data-i18n="experienceDetails">Experience Details</span>
+              <textarea id="experienceDetails" name="experienceDetails" rows="2" data-i18n-placeholder="experiencePlaceholder" placeholder="Job title, employer, and responsibilities"></textarea>
+            </label>
+          </div>
+          <p class="field-hint" data-i18n="experienceHint">Choose your years of experience. Select Fresher if you have no work experience.</p>
+        </section>
+
+        <section class="form-section objective-generator">
+          <h2><span class="step-number">05</span><span data-i18n="careerObjective">Career Objective</span></h2>
+          <p class="field-hint" data-i18n="objectiveAiInfo">Generate a tailored objective with AI. Education, skills, and work details are sent only after you agree and click the button.</p>
+          <label class="ai-consent">
+            <input id="aiConsent" type="checkbox">
+            <span data-i18n="objectiveAiConsent">I agree to send my education, skills, and work experience to OpenAI to generate an objective.</span>
+          </label>
+          <button type="button" class="generate-button" id="generateObjective" disabled data-i18n="generateObjective">Generate with AI</button>
+          <p id="objectiveStatus" class="objective-status" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="form-section skills-form-section">
+          <h2><span class="step-number">06</span><span data-i18n="keySkills">Key Skills</span></h2>
+          <p class="field-hint" data-i18n="skillsHint">Select the skills that match your profile.</p>
+          <div id="skillsList" class="skills-list" aria-label="Select skills"></div>
+        </section>
+
+        <section class="form-section declaration-form-section">
+          <h2><span class="step-number">07</span><span data-i18n="declaration">Declaration</span></h2>
+          <div class="form-grid">
+            <label class="field">
+              <span data-i18n="place">Place</span>
+              <input id="place" name="place" data-i18n-placeholder="placePlaceholder" placeholder="e.g. Jaipur">
+            </label>
+            <label class="field">
+              <span data-i18n="date">Date</span>
+              <input id="declarationDate" name="declarationDate" type="date">
+            </label>
+          </div>
+          <p class="field-hint" data-i18n="declarationHint">Your name will be shown as your signature on the resume.</p>
+        </section>
+      </form>
+    </section>
+
+    <aside class="preview-panel" aria-label="Live resume preview">
+      <div class="preview-toolbar">
+        <div><span class="live-dot"></span><span data-i18n="livePreview">Live Preview</span></div>
+        <span class="paper-label">A4</span>
+      </div>
+      <article id="resumePreview" class="resume-page">
+        <div class="resume-topline"></div>
+        <header class="resume-header">
+          <h1 id="previewName" class="preview-name" data-i18n="yourName">YOUR NAME</h1>
+          <p id="previewContact" class="preview-contact"></p>
+        </header>
+        <section class="resume-block">
+          <h2 data-i18n="resumeTitle">Resume / Curriculum Vitae</h2>
+          <h3 data-i18n="careerObjective">Career Objective</h3>
+          <p id="previewObjective" class="resume-copy"></p>
+          <p class="objective-note" data-i18n="objectivePrivacy">Personalized from your profile on this device.</p>
+        </section>
+        <section class="resume-block">
+          <h3 data-i18n="personalDetails">Personal Details</h3>
+          <dl id="previewPersonal" class="detail-list"></dl>
+        </section>
+        <section class="resume-block">
+          <h3 data-i18n="academicQualification">Academic Qualification</h3>
+          <div class="qualification-table">
+            <div class="table-row table-head">
+              <span data-i18n="qualification">Qualification</span>
+              <span data-i18n="boardUniversity">Board / University</span>
+              <span data-i18n="passingYear">Year</span>
+              <span data-i18n="percentage">Percentage</span>
+            </div>
+            <div class="table-row">
+              <span id="previewQualification">—</span>
+              <span id="previewBoard">—</span>
+              <span id="previewYear">—</span>
+              <span id="previewPercentage">—</span>
+            </div>
+          </div>
+        </section>
+        <section class="resume-block">
+          <h3 data-i18n="workExperience">Work Experience</h3>
+          <p id="previewExperience" class="resume-copy"></p>
+        </section>
+        <section class="resume-block">
+          <h3 data-i18n="keySkills">Key Skills</h3>
+          <ul id="previewSkills" class="resume-skills"></ul>
+        </section>
+        <section class="resume-block declaration-block">
+          <h3 data-i18n="declaration">Declaration</h3>
+          <p id="previewDeclaration" class="resume-copy"></p>
+          <div class="declaration-meta">
+            <p><strong data-i18n="place">Place</strong>: <span id="previewPlace">—</span></p>
+            <p><strong data-i18n="date">Date</strong>: <span id="previewDate">—</span></p>
+          </div>
+          <div class="signature">
+            <span id="previewSignature">YOUR NAME</span>
+            <span data-i18n="signature">Signature</span>
+          </div>
+        </section>
+      </article>
+    </aside>
+  </main>
+  <footer class="site-footer">
+    <span data-i18n="privacyNote">Your information stays in this browser and is not uploaded.</span>
+    <span class="developer-credit"><span data-i18n="developedBy">Developed by</span> <a href="https://hsainii.vercel.app" target="_blank" rel="noopener noreferrer">Himanshu Saini</a></span>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

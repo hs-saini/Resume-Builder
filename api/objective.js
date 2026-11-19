@@ -8,24 +8,22 @@ function sendJson(res, status, payload) {
   res.end(JSON.stringify(payload));
 }
 
-function isAllowedOrigin(origin) {
-  if (!origin) return false;
+function isAllowedOrigin(origin, requestHost) {
+  if (!origin || !requestHost) return false;
 
-  let hostname;
+  let parsedOrigin;
   try {
-    hostname = new URL(origin).host;
+    parsedOrigin = new URL(origin);
   } catch {
     return false;
   }
 
-  const allowedHosts = [
-    process.env.VERCEL_URL,
-    process.env.VERCEL_PROJECT_PRODUCTION_URL,
-    process.env.NODE_ENV === "development" ? "localhost:3000" : "",
-    process.env.NODE_ENV === "development" ? "127.0.0.1:3000" : ""
-  ].filter(Boolean);
-
-  return allowedHosts.includes(hostname);
+  const isHttps = parsedOrigin.protocol === "https:";
+  const isLocalDevelopment = process.env.NODE_ENV === "development"
+    && parsedOrigin.protocol === "http:"
+    && ["localhost:3000", "127.0.0.1:3000"].includes(parsedOrigin.host);
+  return parsedOrigin.host.toLowerCase() === requestHost.toLowerCase()
+    && (isHttps || isLocalDevelopment);
 }
 
 function isShortText(value, maxLength) {
@@ -38,7 +36,7 @@ module.exports = async function handler(req, res) {
     return sendJson(res, 405, { error: "Method not allowed." });
   }
 
-  if (!isAllowedOrigin(req.headers.origin)) {
+  if (!isAllowedOrigin(req.headers.origin, req.headers.host)) {
     return sendJson(res, 403, { error: "Request origin is not allowed." });
   }
 
